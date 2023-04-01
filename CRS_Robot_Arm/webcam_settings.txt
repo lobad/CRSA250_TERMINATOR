@@ -1,0 +1,5 @@
+video_filename=Test_video
+video_path=J:/Documents/CRS Robot Arm/Videos
+image_filename=test_image
+image_path=J:/Documents/CRS Robot Arm/Images
+camera_port=0.0

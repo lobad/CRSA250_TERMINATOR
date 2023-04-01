@@ -1,0 +1,248 @@
+B-1 RAPL-II Error Codes
+All robot operations are monitored for error conditions. Detectable errors are listed in this
+appendix. When an error concition exists, a message will be displayed at the default device,
+and the ready-light on the teach pendant will turn off.
+To clear the error condition, any correct command may be entered. The command will clear
+the error detection flag, and will then turn the ready-light back on. A STATUS command will
+list the previous error condition.
+ERROR MESSAGE CESCRIPTION
+000AXIS#1 OUT AXIS #1 IS OUT OF RANGE:
+This error means that there has been a Loss Of FeedBack error for joint 1. This error
+could be due to a collision with a stationary object, a blown fuse in the motor circuit,
+or a true loss of feedhack signal from the encoder.
+001 AXIS#2 OUT AXIS #2 IS OUT OF RANGE:
+Same as error 000, but for axis 2.
+002 AXIS#3 OUT AXIS #3 IS OUT OF RANGE:
+Same as error 000, but for axis 3.
+003 AXIS#4 OUT AXIS #4 IS OUT OF RANGE:
+Same as error 000, but for axis 4.
+004 AXIS#5 OUT AXIS #5 IS OUT OF RANGE:
+Same as error (000, but for axis 5.
+005 AXIS#6 OUT AXIS #6 IS OUT OF RANGE:
+Same as error 000, but for axis 6.
+006 AXIS#7 OUT AXIS #7 IS OUT OF RANGE:
+Same as error 000, but for axis 7.
+007 AXIS#8 OUT AXIS #8 IS OUT OF RANGE:
+Same as error 000, but for axis 8.
+OO8ILLEG OPER ILLEGAL. OPERAND:
+An operand in the command line is not acceptable.
+APPENDIX B - 1
+B-1 RAPL-II Error Codes (continued)
+ERROR MESSAGE DESCRIPTION
+009EOL NOT FO END OF LINE NOT FOUND:
+The end of line descriptor (a <cr>) was not found, causing an incorrect read of the data.
+Command lines are limited to 128 characters in length including the EOL character.
+010SYMB UNDEF SYMBOL UNDEFINED:
+A necessary variable was not present in the symbol table. To correct, manually, or
+through the program logic, create a symbol in the table.
+011LOCN UNDEF LOCATION UNDEFINED:
+The robot location referenced was not previously defined. Check the location table for
+the location in questicn, and create if necessary.
+012COMM ERR?? COMMAND ERROR:
+The command entered was not found in the command list. A spelling mistake, or the lack
+of a space between th: line number and the command descriptor could have caused this
+problem. Either re-type the line, or inspect the program line for the mistake.
+013 ARG MISSIN ARGUMENT MISSING:
+An argument was expected, but not read. Check the command syntax
+014 BAD SYNTAX BAD SYNTAX:
+A general error which occurs when the command line could not be decoded. Check for a
+spelling error in the command name.
+015PP NOT LEG PRECISION POINT NOT LEGAL:
+A precision point was specified as a location in the command line, but was not permitted
+in this situation.
+016I/0 ADDR?? I/0 ADDRESS ERROR:
+The I/0 number which was entered in the command line was beyond the permissable range.
+Standard digital I/0 is from 1 to 16, while optionally, 1 to 40 can be used.
+017PROG NOT F PROGRAM NOT FOUND:
+The program called was not found in the program directory. Create the program, or check
+the spelling of the missing program call command.
+018ILLEG ARGU ILLEGAL ARGUMENT:
+An argument was entered, but not permitted.
+O19LINE NOT F LINE NOT FOUND:
+The program line number called in a branching statement is not present in the program.
+020ARG TOO BI ARGUMENT TOO BIG:
+The value of a specified argument is too big for the command.
+APPENDIX B - 2
+B-1 RAPL-II Error Codes (continued)
+ERROR MESSAGE DESCRIPTION
+021NO ROOM LE NO ROOM LEFT:
+The program buffer is full, and cannot accept any further information. Delete unwanted
+programs, or re-allocate memory with the ALLOCATE command.
+022TABLE FULL TABLE FULL:
+The robot controller maintains program names, location and variable references in tables.
+This error means that there is no room left to store a new item. Delete all unwanted
+information, or re-allocate memory.
+023BAD LINE N BAD LINE NUMBER: -
+The line number called could not be found, and that a value of zerc was returned after
+its search. The value of zero is an illegal line number.
+024ILL A/D CH {LLEGAL A/D CHANNEL:
+An illegal analog to digital conversion channel was specified. Channel numbers 1 to 25
+are valid. Channel 9 is the speed selector knob on the teach pendant.
+025LINE TOO L LINE TOO LONG:
+The command line exceeded the maximum number of characters permitted, 128 characters.
+026 EOF NOT FO END OF FILE NOT FOUND:
+An end-of-file character was not found. This implies that a program buffer error has
+occurred. To remedy clear all memory and re-load all information. If the problem
+persists, then a fault exists in user memory, or a problem with storing the information
+on an external device caused invalid storage of information. When this information was
+re-loaded, the EOF character was not found, thus causing the error.
+027PROG EXIST PROGRAM EXISTS:
+An attempt to create a duplicate file name, or an attempt to load into an existing file
+name was discovered. Either delete the existing file, or define a new program name for
+the new function.
+028 LINE EXIST LINE EXISTS:
+An attempt to insert an existing line number was found. Either define a new line number,
+or delete the old one first.
+029 XFRM ILLEG TRANSFORM ILLEGAL
+A move to an imposisible robot coordinate was attempted and the coordinate
+transformation for the location generated a mathematically impossible result.
+030RESERVED
+031 RESERVED
+APPENDIX B - 3
+B-1 RAPL-II Error Codes (continued)
+ERROR MESSAGE DESCRIPTION
+032HOME FAIL1 JOINT #1 HOME FAILURE:
+The home sequence failed during the motion of axis 1. The axis was commanded a motion
+of just over 1000 pulses, or one motor revolution. During this motion, a zero-crossing
+marker pulse was expected but not seen. This could be due to an encoder failure, a
+wiring problem or just 3 lack of power to motor 1. Check for servo action and retry the
+HOME command. If it fails again, check encoder function and connection.
+033 HOME FAIL2 JOINT #2 HOME FAILURE:
+Follow the same procecure as error 032.
+034 HOME FAIL3 JOINT #3 HOME FAILURE:
+Follow the same procecdure as error 032.
+035 HOME FAIL4 JOINT #4 HOME FAILURE:
+Follow the same procedure as error 032.
+036 HOME FAILS JOINT #5 HOME FAILURE:
+Follow the same procedure as error 032.
+037HOME FAIL6 JOINT #6 HOME FAILURE:
+Follow the same procedure as error 032.
+038 HOME FATL7 TNYNT 27 HOME FATT.URE:
+Follow the same procedure as error 032.
+039 HOME FAILS JOINT #8 HOME FAILURE:
+Follow the same procedure as error 032.
+040ARM POWER ARM POWER:
+The arm power switch was turned off, which means that no power is going to the servo
+motors. In this condit:on, the robot cannot move. The robot has been placed in a LIMP
+state.
+041 NOT HOMED NOT HOMED:
+The robot cannot perform the requested motion because it has not been homed after power
+up.
+042JNT #1 OUT JOINT #1 OUT OF RANGE:
+The next motion will send joint 1 out of range. Inspect the destination point for
+validity.
+043 JNT #2 OUT JOINT #2 OUT OF RANGE:
+Follow the same procedure as error 042.
+044 JNT #3 OUT JOINT #3 OUT OF RANGE:
+Follow the same procedure as error 042.
+APPENDIX B - 4
+B-1 RAPL-II Error Codes (continued)
+ERROR MESSAGE CESCRIPTION S
+045JNT #4 OUT JOINT #4 OUT OF RANGE:
+Follow the same procedure as error 042.
+046 JNT #5 OUT JOINT #5 OUT OF RANGE:
+Follow the same procedure as error 042.
+047 CHECKSUM F CHECKSUM FAILURE:
+The desired item of memory (program, location or variable) has been changed in some
+unpredictable way. The use of this memory item could cause unexpected results. Check
+the item and change or edit it to the correct value. -
+048 RESERVED
+049MEM NOT AL MEMORY NOT ALLOCATED:
+RAPL-II checked user memory and believes it has not been allocated. This could be an
+indication of battery failure. Use the ALLOC command to partition and clear the robot
+memory before use.
+0S0AMBIG CMD AMBIGUOUS COMMAND:
+The user specified too few characters in a command specifier so that it is not yet a
+unique command choice. Re-enter the command. This error will occur when pressing a <cr>
+immediately after the prompt.
+051#0 TXD TIM SERIAL CHANNEL #0 TIMEOUT:
+A timeout in serial device 0 indicating a hardware communication failure. When you see
+this message, the concition should already be cleared, but check the cable and its
+connections to be safe. If this fails, then turn system off and on.
+052#0 CTS TIM SERIAL CHANNEL #0 CTS TIMEOUT:
+A timeout in the serial device 0 handshake control signal. This will appear only if the
+operator has selected a CTS/RTS handshake format. A timeout error would seem to
+indicate that the external device has failed, or a connection has come loose.
+053#1 TXD TIM SERIAL CHANNEL #1 TIMEOUT:
+Follow the same procecure as error 051 but for device 1.
+052#1 CTS TIM SERIAL CHANNEL #1 CTS TIMEOUT:
+Follow the same procedure as error 052 but for device 1.
+053 RESERVED
+054 RESERVED
+O55RESERVED
+APPENDIX B - 5
+B-1 RAPL-II Error Codes {continued)
+ERROR MESSAGE DESCRIPTION
+056 CAL CKSUM CALIBRATE CHECKSUM ERROR:
+The robot arm calibration values stored in memory, which are used in the homing
+sequence, have been corrupted. Re-Calibrate the robot or re-load the calibration values
+from disk using the ROBCOMM utility LOADCAL.
+057 RESERVED
+058 NO ACCESS NO ACCESS:
+User requires supervisory access to this command. Enter the correct PASSWORD and retry
+the command. -
+059RSERVED 10 RESERVED I/0 ERROR:
+Attempt to use serial device #1 when it has been reserved for ACI use.
+060ACI ERROR! REMOTE COMMUNICATION ERROR:
+Contact your distribu-or.
+061 RESERVED
+062N0 RET LEV NO RETURN LEVEL
+Either a RETURN instruction was used when the program was not called with a GOSUB (ie.
+trying to RUN a subroutine), or a attempted GOSUB call would result in a subroutine
+nesting level greater than 10,
+063BAD AXIS N BAD AXIS NUMBER
+An extra axis commanc was issued to a nonexistent axis. Use the @NOA command to set
+the number of axes.
+064NOT AVAIL NOT AVAILABLE
+An option cannot be installed in the current system, or a function has been rendered
+unavailable with the current software.
+065SLOT USED AXIS SLOT ALREADY USED
+Either the programmer was attempting to set up the controller for 8 axes while the servo
+or magnetic gripper cption was installed, or vice versa. The programmer must deactivate
+the option which uses slot 8 first before assigning the new function.
+066 STR ERROR STRAIGHT LINE ERROR
+A straight line path was halted since it hit a joint limit. It may not be possible to move
+the arm out of this josition using a straight line, so use a JOINT move.
+067NOT INSTAL EXPANSION MEMORY NOT INSTALLED
+The continuous path command CTPATH was attempted, but the extra memory option was not
+installed. Could also indicate an attempt to write to a write-protected or missing EEPROM
+memory board.
+APPENDIX B - 6
+B-1 RAPL-II Error Codes (continued)
+ERROR MESSAGE CESCRIPTION
+068N0O PATH LO MO PATH LOADED
+When requesting a continuous path execution with GOPATH, the command interpreter could
+not find any relevant path data loaded. Re-teach the path using the CTPATH command.
+069#0 FRA ERR DEVICE 0 FRAMING ERROR
+Serial device #0 framing error. A hardware communication error has been determined.
+Retry the communicatior.
+070#0 PAR ERR DEVICE 0 PARITY ERROR
+Serial device #0 parity error. A hardware communication error has been determined.
+Retry the communication.
+071#0 OVR ERR NEVICE 0 OVERRUN ERROR
+Serial device #0 overrun error. A hardware communication error has been determined.
+Retry the communication.
+072#1 FRA ERR DEVICE 1 FRAMING ERROR
+Serial device #1 framing error. A hardware communication error has been determined.
+Retry the communication.
+073#1 PAR ERR DEVICE 1 PARITY ERROR
+Serial device #1 parity error. A hardware communication error has been determined.
+Retry the communication.
+074#1 OVR ERR DEVICE 1 OVERRUN ERROR
+Serial device #1 overrun error. A hardware communication error has been determined.
+Retry the communication.
+075 UNDEF ERRO IJNDEFINED ERROR
+An undefined RAPL error has been detected. This is an internal software failure which
+should be reported to a qualified CRS service centre.
+076-083
+IAC WRIT N IAC WRITE ERROR 1-8
+This error range will be displayed if there has been a write error to a particular smart
+axis card. This error may occur during an emergency stop procedure, but should never
+occur during proper ogeration. Any occurrence of this error should be reported to a
+gualified CRS service centre.
+084-091
+IAC ERRO N IAC ERROR 1-8
+This error range will be displayed if there has been an internal error in a particular
+smart axis card. This =2rror may occur during an emergency stop procedure, but should
+never occur during proper operation. Any occurrence of this error should be reported
+to a qualified CRS service centre. 
