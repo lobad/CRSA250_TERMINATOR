@@ -32,7 +32,7 @@ command_list ={
         "description": "Run OCR on video feed, output recognized text to data field. Enter value after command that camera will search for. 'p' and 'm' values are for setting +/- tolerances on the range the value can be in",
         "format": "(SEETEXT), (SEETEXT)420, (SEETEXT)420p5m0, (SEETEXT)69pm10",
         "modes": "A, C, N",
-        "app": "run_ocr",
+        "app": "toggle_ocr",
     },
         
     "(CAMCONN)": {
@@ -76,7 +76,7 @@ command_list ={
     },      
     
     
-    " ": {
+    "() )": {
         "comment": "(/310) ",
         "description": " ",
         "format": " ",
@@ -87,14 +87,14 @@ command_list ={
         "(WAIT)": {
         "comment": "(/311)",
         "description": "Wait for specified time in minutes and seconds",
-        "format": "(WAIT)1:30",
+        "format": "(WAIT)90",
         "modes": "A, N, T",
         "app": "wait_function$",
     },
   
 # Always leave this cell empty
     
-    " ": {
+    "( )": {
         "comment": " ",
         "description": " ",
         "format": " ",
