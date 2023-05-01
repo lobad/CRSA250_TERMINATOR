@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+
+<robot name="simple_5dof_robot_arm">
+  <!-- Link Definitions -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="10" radius="1.75"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+  </link>
+  
+  <joint name="Waist" type="revolute">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="waist"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.2288" upper="3.2288" effort="30" velocity="1.0"/>
+  </joint>
+
+  <link name="waist">
+    <inertial>
+      <origin xyz="0 0 1" rpy="0 0 0"/>
+      <mass value="1.0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+  </link>
+
+  <joint name="Shoulder" type="revolute">
+    <origin xyz="0 0 5" rpy="0 0 0"/>
+    <parent link="waist"/>
+    <child link="shoulder"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.6981" upper="1.7453" effort="30" velocity="1.0"/>
+  </joint>
+  <link name="shoulder">
+    <visual>
+      <origin xyz="0 0 5" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="10" radius="1"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+  </link>  
+
+
+
+  <joint name="Elbow" type="revolute">
+    <origin xyz="0 0 10" rpy="0 0 0"/>
+    <parent link="shoulder"/>
+    <child link="elbow"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-.1745" upper="2.4435" effort="30" velocity="1.0"/>
+  </joint>
+  <link name="elbow">
+    <visual>
+      <origin xyz="0 0 5" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="10" radius="0.5"/>
+      </geometry>
+      <material name="yellow">
+        <color rgba="1 1 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+
+  <joint name="bendWrist" type="revolute">
+    <origin xyz="0 0 10" rpy="0 0 0"/>
+    <parent link="elbow"/>
+    <child link="wrist_bend"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-1.9198" upper="1.9198" effort="30" velocity="1.0"/>
+  </joint>
+  <link name="wrist_bend">
+    <visual>
+      <origin xyz="0 0 .5" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="1" radius="0.25"/>
+      </geometry>
+      <material name="orange">
+        <color rgba="1 0.5 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="spinWrist" type="revolute">
+    <origin xyz="0 0 .5" rpy="0 0 0"/>
+    <parent link="wrist_bend"/>
+    <child link="tool_head"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.9198" upper="1.9198" effort="30" velocity="1.0"/>
+  </joint>
+  <link name="tool_head">
+    <visual>
+      <origin xyz="0 0 0.5" rpy="0 0 0"/>
+      <geometry>
+        <box size="1 1 0.045"/>
+      </geometry>
+      <material name="purple">
+        <color rgba="0.5 0 0.5 1"/>
+      </material>
+    </visual>
+  </link>
+</robot>

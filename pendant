@@ -1,0 +1,234 @@
+#include <Arduino.h>
+
+// Pin definitions for arduino nano
+// Comments contain DB37 pinout, chosen wire colour and function the arduino pin is replacing
+
+// Vary the Speed by immitating a 500 ohm potentiometer
+const int spSig = A0; // SP.SIG (pin 10) - BLUE - potentiometer output
+ // SP.REF (pin 11) GND - GREEN - potentiometer output
+// Toggle movement on + or -
+const int waist1 = A2; // WAIST (pin 13) - ORANGE - switch
+const int waist2 = 10; // WAIST (pin 31) - ORANGE - switch
+const int shoulderPin1 = 6; // SHOULDER (pin 12) - YELLOW - switch
+const int shoulder2 = 2; // SHOULDER (pin 30) - BLACK - switch
+const int elbow1 = 5; // ELBOW (pin 14) - BLACK - switch
+const int elbow2 = 13; // ELBOW (pin 32) - GREEN - switch
+const int wristBend1 = A3; // WRIST BEND (pin 15) - WHITE - switch
+const int wristBend2 = 9; // WRIST BEND (pin 33) - BLUE - switch
+const int wristSwivel1 = A5; // WRIST SWIVEL (pin 19) - GREEN - switch
+const int wristSwivel2 = A6; // WRIST SWIVEL (pin 37) - BLACK - switch
+// Toggle Functions 
+const int limp1 = 4; // LIMP (pin 16) - GRAY - switch
+//const int limp2 = ; // LIMP (pin 34) - PURPLE - switch
+const int align1 = A4; // ALIGN (pin 17) - PURPLE - switch
+const int align2 = 8; // ALIGN (pin 35) - GRAY - switch
+const int grip1 =7; // GRIP (pin 08) - GRAY - switch
+const int grip2 = 3; // GRIP (pin 28) - GRAY - switch
+// Button Press
+const int abort1 = A1; // ABORT (pin 09) - PURPLE - button
+const int teach1 = 12; // TEACH (pin 27) - PURPLE - button
+// Read the LED status
+ //const int notSurePin = 25; // NOT SURE (pin 25) - GREEN
+ //const int led = 26; // LED (pin 26) - BLUE  - LED
+//GROUND WIRES FROM DB37
+ // GND (pin 07) - WHITE
+ // GND (pin 29) - WHITE
+// We don't need these where we're going
+ //const int auxPin = xx; // AUX (pin 18) - BLUE - switch
+ //const int auxBPin = xx; // AUX (pin 36) - WHITE - switch
+
+// Declare function prototypes
+void readFromPython();
+void sendToPython();
+
+// Global variables
+int potValue = 0; // Simulated potentiometer value received from Python
+
+// Setup function
+void setup() {
+  Serial.begin(9600); // Start serial communication at 9600 baud rate
+  Serial.println("PNDNT AVAILABLE");
+  
+  
+  // Set up the input pins as INPUT_PULLUP for switches and buttons
+  pinMode(spSig, INPUT);
+  pinMode(waist1, INPUT_PULLUP);
+  pinMode(waist2, INPUT_PULLUP);
+  pinMode(shoulderPin1, INPUT_PULLUP);
+  pinMode(shoulder2, INPUT_PULLUP);
+  pinMode(elbow1, INPUT_PULLUP);
+  pinMode(elbow2, INPUT_PULLUP);
+  pinMode(wristBend1, INPUT_PULLUP);
+  pinMode(wristBend2, INPUT_PULLUP);
+  pinMode(wristSwivel1, INPUT_PULLUP);
+  pinMode(wristSwivel2, INPUT_PULLUP);
+  pinMode(limp1, INPUT_PULLUP);
+ // pinMode(limp2, INPUT_PULLUP);
+  pinMode(align1, INPUT_PULLUP);
+  pinMode(align2, INPUT_PULLUP);
+  pinMode(grip1, INPUT_PULLUP);
+  pinMode(grip2, INPUT_PULLUP);
+  pinMode(abort1, INPUT_PULLUP);
+  pinMode(teach1, INPUT_PULLUP);
+  
+  // Set up the LED status pins as OUTPUT
+ // pinMode(notSurePin, OUTPUT);
+ // pinMode(led, INPUT);
+}
+// Loop function
+void loop() {
+  boolean isConnected = false; // Initialize the flag for checking connection status
+  Serial.println("PNDNT READY FOR CONNECTION");
+  while (true) {
+    isConnected = checkConnection(); // Check for the start command
+
+    if (isConnected) { // Process data only when connected
+      while (isConnected) { 
+        
+        delay(10); // Add a small delay to reduce serial communication load
+        readFromPython(); // Read the data sent from the Python application
+      }
+    }
+  }
+}
+
+boolean checkConnection() {
+  if (Serial.available() > 0) {
+    String inputString = Serial.readStringUntil('\n'); // Read a line from the serial buffer
+    if (inputString == "pndnt: START") { // Check for the start command
+      Serial.println("PNDNT CONNECTED."); // Send a confirmation message
+      return true; // Set the flag to true to begin processing
+    }
+  }
+  return false; // If neither command is received, keep waiting
+}
+
+void readFromPython() {
+  Serial.println("WAITING FOR COMMAND");
+  while (Serial.available() > 0) {
+    String inputString = Serial.readStringUntil('\n'); // Read a line from the serial buffer
+    if (inputString.startsWith("pndnt: ")) {
+      Serial.println("Processing Command");
+      String command = inputString.substring(7); // Extract the command keyword
+      Serial.print("Extracted command: "); // Print the extracted command
+      Serial.println(command);
+
+      processCommand(command); // Process the command
+    }
+  }
+}
+
+void processCommand(String command) {
+    Serial.print("Received command: ");
+    
+
+if (command == "WAIST1_ON") {
+    digitalWrite(waist1, LOW);
+    Serial.println("pndnt: WAIST1_ON");
+} else if (command == "WAIST1_OFF") {
+    digitalWrite(waist1, HIGH);
+    Serial.println("pndnt: WAIST1_OFF");
+} else if (command == "WAIST2_ON") {
+    digitalWrite(waist2, LOW);
+    Serial.println("pndnt: WAIST2_ON");
+} else if (command == "WAIST2_OFF") {
+    digitalWrite(waist2, HIGH);
+    Serial.println("pndnt: WAIST2_OFF");
+} else if (command == "SHOULDER1_ON") {
+    digitalWrite(shoulderPin1, LOW);
+    Serial.println("pndnt: SHOULDER1_ON");
+} else if (command == "SHOULDER1_OFF") {
+    digitalWrite(shoulderPin1, HIGH);
+    Serial.println("pndnt: SHOULDER1_OFF");
+} else if (command == "SHOULDER2_ON") {
+    digitalWrite(shoulder2, LOW);
+    Serial.println("pndnt: SHOULDER2_ON");
+} else if (command == "SHOULDER2_OFF") {
+    digitalWrite(shoulder2, HIGH);
+    Serial.println("pndnt: SHOULDER2_OFF");
+} else if (command == "ELBOW1_ON") {
+    digitalWrite(elbow1, LOW);
+    Serial.println("pndnt: ELBOW1_ON");
+} else if (command == "ELBOW1_OFF") {
+    digitalWrite(elbow1, HIGH);
+    Serial.println("pndnt: ELBOW1_OFF");
+} else if (command == "ELBOW2_ON") {
+    digitalWrite(elbow2, LOW);
+    Serial.println("pndnt: ELBOW2_ON");
+} else if (command == "ELBOW2_OFF") {
+    digitalWrite(elbow2, HIGH);
+    Serial.println("pndnt: ELBOW2_OFF");
+} else if (command == "WRISTBEND1_ON") {
+    digitalWrite(wristBend1, LOW);
+    Serial.println("pndnt: WRISTBEND1_ON");
+} else if (command == "WRISTBEND1_OFF") {
+    digitalWrite(wristBend1, HIGH);
+    Serial.println("pndnt: WRISTBEND1_OFF");
+} else if (command == "WRISTBEND2_ON") {
+    digitalWrite(wristBend2, LOW);
+    Serial.println("pndnt: WRISTBEND2_ON");
+} else if (command == "WRISTBEND2_OFF") {
+    digitalWrite(wristBend2, HIGH);
+    Serial.println("pndnt: WRISTBEND2_OFF");
+} else if (command == "WRISTSWIVEL1_ON") {
+    digitalWrite(wristSwivel1, LOW);
+    Serial.println("pndnt: WRISTSWIVEL1_ON");
+} else if (command == "WRISTSWIVEL1_OFF") {
+    digitalWrite(wristSwivel1, HIGH);
+    Serial.println("pndnt: WRISTSWIVEL1_OFF");
+} else if (command == "WRISTSWIVEL2_ON") {
+    digitalWrite(wristSwivel2, LOW);
+    Serial.println("pndnt: WRISTSWIVEL2_ON");
+} else if (command == "WRISTSWIVEL2_OFF") {
+    digitalWrite(wristSwivel2, HIGH);
+    Serial.println("pndnt: WRISTSWIVEL2_OFF");
+} else if (command == "LIMP1_ON") {
+    digitalWrite(limp1, LOW);
+    Serial.println("pndnt: LIMP1_ON");
+} else if (command == "LIMP1_OFF") {
+    digitalWrite(limp1, HIGH);
+    Serial.println("pndnt: LIMP1_OFF");
+// } else if (command == "LIMP2_ON") {
+//     digitalWrite(limp2, LOW);
+//     Serial.println("LIMP2_ON");
+// } else if (command == "LIMP2_OFF") {
+//     digitalWrite(limp2, HIGH);
+//     Serial.println("LIMP2_OFF");
+} else if (command == "ALIGN1_ON") {
+    digitalWrite(align1, LOW);
+    Serial.println("pndnt: ALIGN1_ON");
+} else if (command == "ALIGN1_OFF") {
+    digitalWrite(align1, HIGH);
+    Serial.println("pndnt: ALIGN1_OFF");
+} else if (command == "ALIGN2_ON") {
+    digitalWrite(align2, LOW);
+    Serial.println("pndnt: ALIGN2_ON");
+} else if (command == "ALIGN2_OFF") {
+    digitalWrite(align2, HIGH);
+    Serial.println("pndnt: ALIGN2_OFF");
+} else if (command == "GRIP1_ON") {
+    digitalWrite(grip1, LOW);
+    Serial.println("pndnt: GRIP1_ON");
+} else if (command == "GRIP1_OFF") {
+    digitalWrite(grip1, HIGH);
+    Serial.println("pndnt: GRIP1_OFF");
+} else if (command == "GRIP ON OFF") {
+    digitalWrite(grip2, LOW);
+    Serial.println("pndnt: GRIP ON");
+} else if (command == "pndnt: GRIP OFF ON") {
+    digitalWrite(grip2, HIGH);
+    Serial.println("pndnt: GRIP OFF OFF");
+} else if (command == "ABORT1_ON") {
+    digitalWrite(abort1, LOW);
+    Serial.println("pndnt: ABORT");
+} else if (command == "TEACH1_ON") {
+    digitalWrite(teach1, LOW);
+    Serial.println("pndnt: TEACH");
+} else {
+    Serial.println("Unknown command");
+} else if (command == "STOP") {
+    isConnected = false;
+    Serial.println("PDNDNT DISCONNECTING");
+} 
+}
+
